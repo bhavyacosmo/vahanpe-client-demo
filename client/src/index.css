@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-gray-50 text-gray-800 font-['Figtree'];
+}
+
+@theme {
+  --color-primary: #0D7CFA;
+  --color-secondary: #1CD9EA;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+@keyframes drive-across {
+  0% {
+    transform: translateX(-100vw);
+  }
+
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+.animate-drive {
+  animation: drive-across 12s linear infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Hide default browser eye icon */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}

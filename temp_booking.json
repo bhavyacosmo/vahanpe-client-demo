@@ -1,0 +1,9 @@
+{
+    "serviceType": "Vehicle",
+    "vehicleType": "2W",
+    "registrationType": "Karnataka",
+    "registrationNumber": "KA01TEST123",
+    "serviceSelected": "Test Service",
+    "price": 100,
+    "customerPhone": "9999999999"
+}
