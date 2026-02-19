@@ -4,13 +4,22 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 require('dotenv').config();
 
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+// Initialize Razorpay only if keys are present to prevent crash on deployment
+let razorpay;
+if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+    razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    });
+} else {
+    console.warn("⚠️ Razorpay keys missing. Payment routes will not work.");
+}
 
 // 1. Create Order
 router.post('/create-order', async (req, res) => {
+    if (!razorpay) {
+        return res.status(500).json({ error: 'Payment gateway configuration missing' });
+    }
     const { amount, currency = 'INR', receipt } = req.body;
 
     // Razorpay expects amount in paise (1 INR = 100 paise)
@@ -36,6 +45,9 @@ router.post('/create-order', async (req, res) => {
 
 // 2. Verify Payment Signature
 router.post('/verify-payment', (req, res) => {
+    if (!razorpay) {
+        return res.status(500).json({ error: 'Payment gateway configuration missing' });
+    }
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
