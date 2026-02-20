@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ServiceCard from '../components/ServiceCard';
 import axios from 'axios';
-import { ArrowLeft, ArrowRight, FileText, Smartphone, RefreshCw, Copy, Download, Globe, MapPin, CheckCircle2, CreditCard, RotateCw, Map } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, Smartphone, RefreshCw, Copy, Download, Globe, MapPin, CheckCircle2, CreditCard, RotateCw, Map, ChevronRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import ConsumerLogin from '../components/ConsumerLogin';
 import fourWheelerImage from '../assets/Gemini_Generated_Image_i7i9tbi7i9tbi7i9.png'; // Reusing as 4W image
@@ -344,19 +344,20 @@ const DrivingLicenceServices = () => {
                                                 onClick={() => { handleServiceSelect(service); }}
                                                 className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between cursor-pointer hover:shadow-md transition-all group"
                                             >
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                                <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0 pr-2">
+                                                    <div className="w-10 h-10 shrink-0 rounded-full bg-blue-50 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                                                         <Icon className="w-5 h-5" />
                                                     </div>
-                                                    <div className="flex flex-col text-left">
-                                                        <span className="font-semibold text-gray-800 text-sm">{service.title}</span>
-                                                        <span className="text-xs text-gray-400">{service.description}</span>
+                                                    <div className="flex flex-col text-left flex-1 min-w-0">
+                                                        <span className="font-semibold text-gray-800 text-sm leading-tight mb-0.5">{service.title}</span>
+                                                        <span className="text-xs text-gray-400 leading-snug">{service.description}</span>
                                                     </div>
                                                 </div>
 
                                                 {/* Price and Chevron */}
-                                                <div className="text-right">
-                                                    <span className="block text-sm font-bold text-gray-800">₹ {service.price} &gt;</span>
+                                                <div className="flex items-center justify-end gap-1 sm:gap-2 shrink-0">
+                                                    <span className="text-sm font-bold text-gray-900 whitespace-nowrap text-right">₹ {service.price}</span>
+                                                    <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
                                                 </div>
                                             </div>
                                         );

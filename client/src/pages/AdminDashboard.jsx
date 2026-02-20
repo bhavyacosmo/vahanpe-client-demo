@@ -323,42 +323,71 @@ const AdminDashboard = () => {
 
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                    <table className="w-full text-left">
-                        <thead className="bg-gray-50 border-b border-gray-100">
-                            <tr>
-                                <th className="p-4 text-xs font-bold text-gray-500 uppercase">Service Name</th>
-                                <th className="p-4 text-xs font-bold text-gray-500 uppercase">Category</th>
-                                <th className="p-4 text-xs font-bold text-gray-500 uppercase">Price (₹)</th>
-                                <th className="p-4 text-xs font-bold text-gray-500 uppercase">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {services.map(service => (
-                                <tr key={service.id} className="hover:bg-gray-50">
-                                    <td className="p-4">
-                                        <div className="font-medium text-gray-800">{service.title}</div>
-                                        <div className="text-xs text-gray-500">{service.description}</div>
-                                    </td>
-                                    <td className="p-4">
-                                        <span className={`text-xs px-2 py-1 rounded-full ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
+                <>
+                    {/* Desktop View */}
+                    <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <table className="w-full text-left">
+                            <thead className="bg-gray-50 border-b border-gray-100">
+                                <tr>
+                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase">Service Name</th>
+                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase">Category</th>
+                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase">Price (₹)</th>
+                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {services.map(service => (
+                                    <tr key={service.id} className="hover:bg-gray-50">
+                                        <td className="p-4">
+                                            <div className="font-medium text-gray-800">{service.title}</div>
+                                            <div className="text-xs text-gray-500">{service.description}</div>
+                                        </td>
+                                        <td className="p-4">
+                                            <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
+                                                {service.category}
+                                            </span>
+                                        </td>
+                                        <td className="p-4 font-mono font-medium whitespace-nowrap">₹ {service.price}</td>
+                                        <td className="p-4">
+                                            <button
+                                                onClick={() => { setEditingService(service); setNewPrice(service.price); }}
+                                                className="text-blue-600 hover:text-blue-800 text-sm font-medium whitespace-nowrap"
+                                            >
+                                                Edit Price
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Mobile View */}
+                    <div className="md:hidden space-y-4">
+                        {services.map(service => (
+                            <div key={service.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col gap-3">
+                                <div>
+                                    <div className="flex justify-between items-start gap-2 mb-1">
+                                        <h3 className="font-semibold text-gray-800 flex-1 leading-tight">{service.title}</h3>
+                                        <span className={`text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap shrink-0 ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
                                             {service.category}
                                         </span>
-                                    </td>
-                                    <td className="p-4 font-mono font-medium">₹ {service.price}</td>
-                                    <td className="p-4">
-                                        <button
-                                            onClick={() => { setEditingService(service); setNewPrice(service.price); }}
-                                            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                                        >
-                                            Edit Price
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                                    </div>
+                                    <p className="text-xs text-gray-500">{service.description}</p>
+                                </div>
+                                <div className="flex justify-between items-center pt-2 border-t border-gray-50">
+                                    <span className="font-mono font-bold text-gray-900">₹ {service.price}</span>
+                                    <button
+                                        onClick={() => { setEditingService(service); setNewPrice(service.price); }}
+                                        className="text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
+                                    >
+                                        Edit
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
             )}
 
             {/* Bookings View - Responsive */}
