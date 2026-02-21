@@ -298,14 +298,14 @@ const DrivingLicenceServices = () => {
                                 <span className="text-xl font-semibold text-gray-500">VahanPe</span>
                             </div>
 
-                            <div className="mb-4 pl-4 min-h-[20px]">
-                                {user && (
+                            {user && (
+                                <div className="mb-4 pl-4 min-h-[20px]">
                                     <div className="animate-fade-in">
                                         <span className="text-gray-500 text-lg font-medium">Hello,</span>
                                         <span className="text-gray-800 text-xl font-bold block">{user.name || 'User'}</span>
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            )}
 
                             {/* DL Number Display Step 3 */}
                             <div className="w-full flex flex-col items-center justify-center mb-8 relative">
