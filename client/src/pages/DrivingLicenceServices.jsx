@@ -298,21 +298,18 @@ const DrivingLicenceServices = () => {
                                 <span className="text-xl font-semibold text-gray-500">VahanPe</span>
                             </div>
 
-                            {user && (
-                                <div className="mb-4 pl-4 min-h-[20px]">
-                                    <div className="animate-fade-in">
-                                        <span className="text-gray-500 text-lg font-medium">Hello,</span>
-                                        <span className="text-gray-800 text-xl font-bold block">{user.name || 'User'}</span>
+                            {/* DL Image Step 3 with Overlapping Greeting */}
+                            <div className="w-full flex flex-col items-center justify-center mb-8 mt-2 relative">
+                                {user && (
+                                    <div className="absolute top-0 left-4 animate-fade-in z-10 max-w-[45%]">
+                                        <span className="text-gray-500 text-sm md:text-lg font-medium">Hello,</span>
+                                        <span className="text-gray-800 text-lg md:text-xl font-bold block truncate" title={user.name}>{user.name || 'User'}</span>
                                     </div>
-                                </div>
-                            )}
-
-                            {/* DL Number Display Step 3 */}
-                            <div className="w-full flex flex-col items-center justify-center mb-8 relative">
+                                )}
                                 <img
                                     src={dlImage}
                                     alt="DL"
-                                    className="w-72 object-contain mb-6"
+                                    className="w-64 md:w-72 object-contain mb-6"
                                 />
 
                                 {/* DL Number Card */}
