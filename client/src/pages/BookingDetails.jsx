@@ -165,14 +165,6 @@ const BookingDetails = () => {
                     </div>
                 </div>
 
-                {/* View Details Button */}
-                <button
-                    onClick={() => navigate('/my-services')}
-                    className="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg hover:bg-blue-700 transition-colors"
-                >
-                    View Details
-                </button>
-
             </div>
         </div>
     );
