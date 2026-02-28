@@ -144,19 +144,32 @@ app.get('/api/services', (req, res) => {
 // 6. Update Service Price (Admin)
 app.patch('/api/services/:id', authenticateToken, isAdmin, (req, res) => {
     const { id } = req.params;
-    const { price } = req.body;
+    const { price, price_2W, price_4W, price_2W4W } = req.body;
 
-    if (!price || isNaN(price)) {
-        return res.status(400).json({ error: 'Valid price is required' });
+    if (price === undefined && price_2W === undefined && price_4W === undefined && price_2W4W === undefined) {
+        return res.status(400).json({ error: 'At least one valid price field is required' });
     }
 
-    const stmt = db.prepare('UPDATE services SET price = ? WHERE id = ?');
-    stmt.run(price, id, function (err) {
+    const updates = [];
+    const values = [];
+
+    if (price !== undefined && !isNaN(price)) { updates.push('price = ?'); values.push(price); }
+    if (price_2W !== undefined && !isNaN(price_2W)) { updates.push('price_2W = ?'); values.push(price_2W); }
+    if (price_4W !== undefined && !isNaN(price_4W)) { updates.push('price_4W = ?'); values.push(price_4W); }
+    if (price_2W4W !== undefined && !isNaN(price_2W4W)) { updates.push('price_2W4W = ?'); values.push(price_2W4W); }
+
+    if (updates.length === 0) {
+        return res.status(400).json({ error: 'No valid numeric price fields provided' });
+    }
+
+    values.push(id);
+
+    const stmt = db.prepare(`UPDATE services SET ${updates.join(', ')} WHERE id = ?`);
+    stmt.run(...values, function (err) {
         if (err) return res.status(500).json({ error: err.message });
         if (this.changes === 0) return res.status(404).json({ error: 'Service not found' });
-        res.json({ message: 'Service price updated', id, price });
+        res.json({ message: 'Service price(s) updated', id });
     });
-    stmt.finalize();
 });
 
 

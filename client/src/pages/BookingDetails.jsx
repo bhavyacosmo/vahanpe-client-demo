@@ -39,7 +39,7 @@ const BookingDetails = () => {
             },
             {
                 title: 'Documents Picked Up',
-                desc: 'Agent has collected your documents',
+                desc: 'VahanPe team has successfully collected your documents.',
                 time: 'TBD',
                 active: stepIndex >= 2, // 'Documents Picked Up' is index 2
                 completed: stepIndex > 2

@@ -54,6 +54,9 @@ const createTableQuery = `
     title TEXT NOT NULL,
     description TEXT,
     price REAL NOT NULL,
+    price_2W REAL DEFAULT 0,
+    price_4W REAL DEFAULT 0,
+    price_2W4W REAL DEFAULT 0,
     type TEXT,
     category TEXT CHECK(category IN ('Vehicle', 'Driving Licence')),
     iconName TEXT
@@ -110,9 +113,9 @@ db.serialize(() => {
       db.get("SELECT count(*) as count FROM services", [], (err, row) => {
         if (err) return console.error(err.message);
         if (row.count === 0) {
-          const stmt = db.prepare("INSERT INTO services (id, title, description, price, type, category, iconName) VALUES (?, ?, ?, ?, ?, ?, ?)");
+          const stmt = db.prepare("INSERT INTO services (id, title, description, price, price_2W, price_4W, price_2W4W, type, category, iconName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
           INITIAL_SERVICES.forEach(service => {
-            stmt.run(service.id, service.title, service.description, service.price, service.type, service.category, service.iconName);
+            stmt.run(service.id, service.title, service.description, service.price, service.price, service.price, service.price, service.type, service.category, service.iconName);
           });
           stmt.finalize();
           console.log('Services table seeded with default data.');

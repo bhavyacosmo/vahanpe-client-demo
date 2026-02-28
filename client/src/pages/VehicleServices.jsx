@@ -299,10 +299,15 @@ const VehicleServices = () => {
                                         return isKA ? service.type === 'KA' : service.type === 'NON_KA';
                                     }).map((service) => {
                                         const Icon = ICON_MAP[service.iconName] || Car;
+                                        let displayPrice = service.price;
+                                        if (formData.vehicleType === '2W') displayPrice = service.price_2W ?? service.price;
+                                        if (formData.vehicleType === '4W') displayPrice = service.price_4W ?? service.price;
+
                                         return (
                                             <div
                                                 key={service.id}
-                                                onClick={() => { handleServiceSelect(service); handleNext(); }} // Auto advance on select
+                                                // Override price with specific vehicle type price before handling
+                                                onClick={() => { handleServiceSelect({ ...service, price: displayPrice }); handleNext(); }}
                                                 className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between cursor-pointer hover:shadow-md transition-all group"
                                             >
                                                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0 pr-2">
@@ -317,7 +322,7 @@ const VehicleServices = () => {
 
                                                 {/* Price and Chevron */}
                                                 <div className="flex items-center justify-end gap-1 sm:gap-2 shrink-0">
-                                                    <span className="text-sm font-bold text-gray-900 whitespace-nowrap text-right">₹ {service.price}</span>
+                                                    <span className="text-sm font-bold text-gray-900 whitespace-nowrap text-right">₹ {displayPrice}</span>
                                                     <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
                                                 </div>
                                             </div>
@@ -375,13 +380,16 @@ const VehicleServices = () => {
 
                             {/* Order Breakdown */}
                             <div className="bg-gray-50 p-4 rounded-xl mb-8">
-                                <h3 className="text-sm font-medium text-gray-500 mb-4">Order Summary</h3>
+                                <h3 className="text-sm font-medium text-gray-500 mb-1">Order Summary</h3>
+                                <p className="text-red-500 text-xs mb-4">
+                                    Applicable government fees/DD are extra and payable as per actuals
+                                </p>
                                 <div className="flex justify-between text-sm mb-2">
-                                    <span className="text-gray-600">Service Fee</span>
+                                    <span className="text-gray-600">Service Fee <span>(All Inclusive)</span></span>
                                     <span className="font-medium">₹ {formData.price}</span>
                                 </div>
                                 <div className="flex justify-between text-sm mb-2 border-b border-gray-200 pb-2">
-                                    <span className="text-gray-600">Processing Fee</span>
+                                    <span className="text-gray-600">GST 18%</span>
                                     <span className="font-medium">₹ 50</span>
                                 </div>
                                 <div className="flex justify-between text-base pt-2">

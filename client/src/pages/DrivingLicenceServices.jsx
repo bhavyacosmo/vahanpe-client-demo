@@ -36,6 +36,7 @@ const DrivingLicenceServices = () => {
     });
     const [servicesList, setServicesList] = useState([]);
     const [loadingServices, setLoadingServices] = useState(true);
+    const [isSmartCardConfirmed, setIsSmartCardConfirmed] = useState(false);
 
     // Fetch Services on Mount
     useEffect(() => {
@@ -335,10 +336,16 @@ const DrivingLicenceServices = () => {
                                         return isKA ? service.type === 'KA' : service.type === 'NON_KA';
                                     }).map((service) => {
                                         const Icon = ICON_MAP[service.iconName] || FileText;
+                                        let displayPrice = service.price;
+                                        if (formData.licenceClass === '2W') displayPrice = service.price_2W ?? service.price;
+                                        if (formData.licenceClass === '4W') displayPrice = service.price_4W ?? service.price;
+                                        if (formData.licenceClass === '2W + 4W') displayPrice = service.price_2W4W ?? service.price;
+
                                         return (
                                             <div
                                                 key={service.id}
-                                                onClick={() => { handleServiceSelect(service); }}
+                                                // Override price with specific licence class price
+                                                onClick={() => { handleServiceSelect({ ...service, price: displayPrice }); }}
                                                 className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between cursor-pointer hover:shadow-md transition-all group"
                                             >
                                                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0 pr-2">
@@ -353,7 +360,7 @@ const DrivingLicenceServices = () => {
 
                                                 {/* Price and Chevron */}
                                                 <div className="flex items-center justify-end gap-1 sm:gap-2 shrink-0">
-                                                    <span className="text-sm font-bold text-gray-900 whitespace-nowrap text-right">₹ {service.price}</span>
+                                                    <span className="text-sm font-bold text-gray-900 whitespace-nowrap text-right">₹ {displayPrice}</span>
                                                     <ChevronRight className="w-5 h-5 text-gray-400 shrink-0" />
                                                 </div>
                                             </div>
@@ -411,13 +418,13 @@ const DrivingLicenceServices = () => {
 
                             {/* Order Breakdown */}
                             <div className="bg-gray-50 p-4 rounded-xl mb-8">
-                                <h3 className="text-sm font-medium text-gray-500 mb-4">Order Summary</h3>
-                                <div className="flex justify-between text-sm mb-2">
-                                    <span className="text-gray-600">Service Fee</span>
+                                <h3 className="text-sm font-medium text-gray-500 mb-1">Order Summary</h3>
+                                <div className="flex justify-between text-sm mb-2 mt-4">
+                                    <span className="text-gray-600">Service Fee <span>(All Inclusive)</span></span>
                                     <span className="font-medium">₹ {formData.price}</span>
                                 </div>
                                 <div className="flex justify-between text-sm mb-2 border-b border-gray-200 pb-2">
-                                    <span className="text-gray-600">Processing Fee</span>
+                                    <span className="text-gray-600">GST 18%</span>
                                     <span className="font-medium">₹ 50</span>
                                 </div>
                                 <div className="flex justify-between text-base pt-2">
@@ -431,6 +438,15 @@ const DrivingLicenceServices = () => {
 
                             {/* Payment Methods */}
                             <div className="mb-8">
+                                <label className="flex items-center gap-2 mb-4 cursor-pointer w-fit">
+                                    <input
+                                        type="checkbox"
+                                        className="w-4 h-4 text-red-600 bg-gray-100 border-red-500 rounded focus:ring-red-500 focus:ring-2 accent-red-500 cursor-pointer shrink-0"
+                                        checked={isSmartCardConfirmed}
+                                        onChange={(e) => setIsSmartCardConfirmed(e.target.checked)}
+                                    />
+                                    <span className="text-red-500 text-xs font-medium select-none">I confirm I have the original Smart Card DL</span>
+                                </label>
                                 <h3 className="text-sm font-medium text-gray-500 mb-4">Select Payment Method</h3>
 
                                 <div className="space-y-3">
@@ -468,8 +484,10 @@ const DrivingLicenceServices = () => {
                                 </div>
                             ) : (
                                 <button
+                                    disabled={!isSmartCardConfirmed}
                                     onClick={handleSubmit}
-                                    className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg mb-4 hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200"
+                                    className={`w-full py-4 rounded-xl font-bold text-lg mb-4 transition-colors shadow-lg shadow-blue-200
+                                        ${isSmartCardConfirmed ? 'bg-primary text-white hover:bg-blue-700' : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-70'}`}
                                 >
                                     Pay ₹ {Number(formData.price) + 50}
                                 </button>

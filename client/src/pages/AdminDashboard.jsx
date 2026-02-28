@@ -182,6 +182,8 @@ const AdminDashboard = () => {
 
 
     const [activeTab, setActiveTab] = useState('bookings'); // 'bookings' or 'services'
+    const [servicesCategory, setServicesCategory] = useState('Driving Licence'); // 'Vehicle' or 'Driving Licence'
+    const [servicesVehicleType, setServicesVehicleType] = useState('2W'); // '2W', '4W', '2W+4W'
     const [services, setServices] = useState([]);
     const [editingService, setEditingService] = useState(null);
     const [newPrice, setNewPrice] = useState('');
@@ -216,7 +218,12 @@ const AdminDashboard = () => {
         }
 
         try {
-            await axios.patch(`${apiUrl}/api/services/${editingService.id}`, { price: newPrice }, {
+            let priceField = 'price';
+            if (servicesVehicleType === '2W') priceField = 'price_2W';
+            if (servicesVehicleType === '4W') priceField = 'price_4W';
+            if (servicesVehicleType === '2W+4W') priceField = 'price_2W4W';
+
+            await axios.patch(`${apiUrl}/api/services/${editingService.id}`, { [priceField]: newPrice }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Price updated successfully!");
@@ -323,7 +330,47 @@ const AdminDashboard = () => {
 
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
-                <>
+                <div className="space-y-6">
+                    {/* Level 1: Category Selection */}
+                    <div className="flex gap-2 bg-gray-50 p-1.5 rounded-lg border border-gray-200 w-fit">
+                        <button
+                            onClick={() => { setServicesCategory('Driving Licence'); setServicesVehicleType('2W'); }}
+                            className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Driving Licence' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Driving Licence
+                        </button>
+                        <button
+                            onClick={() => { setServicesCategory('Vehicle'); setServicesVehicleType('2W'); }}
+                            className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Vehicle' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Vehicle
+                        </button>
+                    </div>
+
+                    {/* Level 2: Vehicle Type Selection */}
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setServicesVehicleType('2W')}
+                            className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                        >
+                            2W
+                        </button>
+                        <button
+                            onClick={() => setServicesVehicleType('4W')}
+                            className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                        >
+                            4W
+                        </button>
+                        {servicesCategory === 'Driving Licence' && (
+                            <button
+                                onClick={() => setServicesVehicleType('2W+4W')}
+                                className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W+4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                            >
+                                2W + 4W
+                            </button>
+                        )}
+                    </div>
+
                     {/* Desktop View */}
                     <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                         <table className="w-full text-left">
@@ -336,58 +383,72 @@ const AdminDashboard = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {services.map(service => (
-                                    <tr key={service.id} className="hover:bg-gray-50">
-                                        <td className="p-4">
-                                            <div className="font-medium text-gray-800">{service.title}</div>
-                                            <div className="text-xs text-gray-500">{service.description}</div>
-                                        </td>
-                                        <td className="p-4">
-                                            <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
-                                                {service.category}
-                                            </span>
-                                        </td>
-                                        <td className="p-4 font-mono font-medium whitespace-nowrap">₹ {service.price}</td>
-                                        <td className="p-4">
-                                            <button
-                                                onClick={() => { setEditingService(service); setNewPrice(service.price); }}
-                                                className="text-blue-600 hover:text-blue-800 text-sm font-medium whitespace-nowrap"
-                                            >
-                                                Edit Price
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                {services.filter(s => s.category === servicesCategory).map(service => {
+                                    let displayPrice = service.price;
+                                    if (servicesVehicleType === '2W') displayPrice = service.price_2W ?? service.price;
+                                    if (servicesVehicleType === '4W') displayPrice = service.price_4W ?? service.price;
+                                    if (servicesVehicleType === '2W+4W') displayPrice = service.price_2W4W ?? service.price;
+
+                                    return (
+                                        <tr key={service.id} className="hover:bg-gray-50">
+                                            <td className="p-4">
+                                                <div className="font-medium text-gray-800">{service.title}</div>
+                                                <div className="text-xs text-gray-500">{service.description}</div>
+                                            </td>
+                                            <td className="p-4">
+                                                <span className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
+                                                    {service.category}
+                                                </span>
+                                            </td>
+                                            <td className="p-4 font-mono font-medium whitespace-nowrap">₹ {displayPrice}</td>
+                                            <td className="p-4">
+                                                <button
+                                                    onClick={() => { setEditingService(service); setNewPrice(displayPrice); }}
+                                                    className="text-blue-600 hover:text-blue-800 text-sm font-medium whitespace-nowrap"
+                                                >
+                                                    Edit Price
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
 
                     {/* Mobile View */}
                     <div className="md:hidden space-y-4">
-                        {services.map(service => (
-                            <div key={service.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col gap-3">
-                                <div>
-                                    <div className="flex justify-between items-start gap-2 mb-1">
-                                        <h3 className="font-semibold text-gray-800 flex-1 leading-tight">{service.title}</h3>
-                                        <span className={`text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap shrink-0 ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
-                                            {service.category}
-                                        </span>
+                        {services.filter(s => s.category === servicesCategory).map(service => {
+                            let displayPrice = service.price;
+                            if (servicesVehicleType === '2W') displayPrice = service.price_2W ?? service.price;
+                            if (servicesVehicleType === '4W') displayPrice = service.price_4W ?? service.price;
+                            if (servicesVehicleType === '2W+4W') displayPrice = service.price_2W4W ?? service.price;
+
+                            return (
+                                <div key={service.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-col gap-3">
+                                    <div>
+                                        <div className="flex justify-between items-start gap-2 mb-1">
+                                            <h3 className="font-semibold text-gray-800 flex-1 leading-tight">{service.title}</h3>
+                                            <span className={`text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap shrink-0 ${service.category === 'Vehicle' ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'}`}>
+                                                {service.category}
+                                            </span>
+                                        </div>
+                                        <p className="text-xs text-gray-500">{service.description}</p>
                                     </div>
-                                    <p className="text-xs text-gray-500">{service.description}</p>
+                                    <div className="flex justify-between items-center pt-2 border-t border-gray-50">
+                                        <span className="font-mono font-bold text-gray-900">₹ {displayPrice}</span>
+                                        <button
+                                            onClick={() => { setEditingService(service); setNewPrice(displayPrice); }}
+                                            className="text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
+                                        >
+                                            Edit
+                                        </button>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between items-center pt-2 border-t border-gray-50">
-                                    <span className="font-mono font-bold text-gray-900">₹ {service.price}</span>
-                                    <button
-                                        onClick={() => { setEditingService(service); setNewPrice(service.price); }}
-                                        className="text-blue-600 hover:text-blue-800 text-sm font-medium px-3 py-1 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors"
-                                    >
-                                        Edit
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
-                </>
+                </div>
             )}
 
             {/* Bookings View - Responsive */}

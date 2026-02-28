@@ -34,6 +34,13 @@ const Home = () => {
                         <span className="text-gray-700 font-medium text-lg">Driving licence</span>
                     </Link>
                 </div>
+
+                {/* Disclaimer */}
+                <div className="mt-8 text-center px-4">
+                    <p className="text-[#e53935] text-sm leading-relaxed max-w-4xl mx-auto">
+                        VahanPe is an independent facilitator and not a government authority. We assist with documentation and submission through official channels. Processing timelines (15-30 working days) begin post RTO submission and are subject to RTO approval.
+                    </p>
+                </div>
             </div>
         </div>
     );

@@ -131,13 +131,7 @@ const MyServices = () => {
                                         </div>
                                     </div>
 
-                                    {/* Disclaimer Box (RED for Mobile) */}
-                                    <div className="mt-6 bg-red-50 p-4 rounded-2xl flex items-start gap-3 border border-red-100">
-                                        <Info className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
-                                        <p className="text-xs text-red-600 italic leading-relaxed">
-                                            Disclaimer: Once our services move to the processing stage, it may take approx 15-30 days to complete.
-                                        </p>
-                                    </div>
+
 
                                     {/* WhatsApp Log */}
                                     {booking.last_whatsapp_status_sent && (
@@ -183,10 +177,7 @@ const MyServices = () => {
                                         </div>
                                     )}
 
-                                    {/* Disclaimer (Red for Desktop as requested) */}
-                                    <p className="text-red-600 text-sm mt-4 font-semibold">
-                                        Disclaimer : once our services moves to the processing stage , it may take approx 15-30 days to complete
-                                    </p>
+
 
                                     {/* WhatsApp Log */}
                                     {booking.last_whatsapp_status_sent && (

@@ -70,8 +70,8 @@ const BookingSuccess = () => {
                     {/* Step 2 */}
                     <div className="relative">
                         <div className="absolute -left-[31px] top-0 w-4 h-4 rounded-full bg-white border-4 border-gray-200"></div>
-                        <h4 className="font-bold text-gray-400">Documents Uploaded</h4>
-                        <p className="text-gray-400 text-sm mt-1">We are awaiting document upload from your end.</p>
+                        <h4 className="font-bold text-gray-400">Documents Pickup</h4>
+                        <p className="text-gray-400 text-sm mt-1">Executive will contact you shortly for pickup & checklist.</p>
                     </div>
                 </div>
             </div>
