@@ -406,9 +406,6 @@ const VehicleServices = () => {
                                     <span className="font-bold text-gray-800">Total Amount</span>
                                     <span className="font-bold text-gray-800">₹ {Number(formData.price) + 50}</span>
                                 </div>
-                                <p className="text-red-600 text-sm mt-3 font-semibold">
-                                    Disclaimer : once our services moves to the processing stage , it may take approx 15-30 days to complete
-                                </p>
                             </div>
 
                             {/* Payment Methods */}

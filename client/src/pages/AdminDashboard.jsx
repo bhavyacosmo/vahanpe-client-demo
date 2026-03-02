@@ -257,59 +257,63 @@ const AdminDashboard = () => {
 
     return (
         <div className="max-w-6xl w-full mx-auto p-4">
-            <div className="flex flex-col xl:flex-row justify-between xl:items-center gap-4 mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
-                <div>
-                    <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
-                    <p className="text-sm text-gray-500">Welcome, {user?.name}</p>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex gap-2 bg-gray-100 p-1 rounded-lg">
-                    <button
-                        onClick={() => setActiveTab('bookings')}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bookings' ? 'bg-white shadow text-primary' : 'text-gray-500 hover:text-gray-700'}`}
-                    >
-                        Bookings
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('services')}
-                        className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'services' ? 'bg-white shadow text-primary' : 'text-gray-500 hover:text-gray-700'}`}
-                    >
-                        Manage Services
-                    </button>
-                </div>
-
-                {activeTab === 'bookings' && (
-                    <div className="flex flex-col md:flex-row md:items-center gap-3 w-full xl:w-auto">
-
-                        {/* Filters */}
-                        <div className="flex flex-wrap items-center gap-2 bg-gray-50 p-1 rounded-lg border border-gray-200">
-                            <input
-                                type="date"
-                                value={filterDate}
-                                onChange={(e) => setFilterDate(e.target.value)}
-                                className="bg-white border text-sm rounded px-2 py-1 outline-none focus:border-blue-500 text-gray-600"
-                            />
-                            <select
-                                value={filterServiceType}
-                                onChange={(e) => setFilterServiceType(e.target.value)}
-                                className="bg-white border text-sm rounded px-2 py-1.5 outline-none focus:border-blue-500 text-gray-600"
-                            >
-                                <option value="All">All Services</option>
-                                <option value="Vehicle Service">Vehicle Service</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                            </select>
-                            {(filterDate || filterServiceType !== 'All') && (
-                                <button
-                                    onClick={() => { setFilterDate(''); setFilterServiceType('All'); }}
-                                    className="text-xs text-red-500 hover:text-red-700 px-2 font-medium"
-                                >
-                                    Clear
-                                </button>
-                            )}
-                        </div>
+            <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 md:gap-6 mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100 min-h-[88px]">
+                {/* Left Group: Title + Tabs */}
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-800 whitespace-nowrap">Admin Dashboard</h1>
+                        <p className="text-sm text-gray-500">Welcome, {user?.name}</p>
                     </div>
-                )}
+
+                    {/* Tabs */}
+                    <div className="flex gap-2 bg-gray-100 p-1 rounded-lg shrink-0">
+                        <button
+                            onClick={() => setActiveTab('bookings')}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'bookings' ? 'bg-white shadow text-primary' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Bookings
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('services')}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeTab === 'services' ? 'bg-white shadow text-primary' : 'text-gray-500 hover:text-gray-700'}`}
+                        >
+                            Manage Services
+                        </button>
+                    </div>
+                </div>
+
+                {/* Right/Center Group: Filters */}
+                <div className="flex-1 flex w-full xl:w-auto xl:justify-center">
+                    {activeTab === 'bookings' && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-3 w-full xl:w-auto">
+                            <div className="flex flex-wrap items-center gap-2 bg-gray-50 p-1.5 rounded-lg border border-gray-200">
+                                <input
+                                    type="date"
+                                    value={filterDate}
+                                    onChange={(e) => setFilterDate(e.target.value)}
+                                    className="bg-white border text-sm rounded px-3 py-1.5 outline-none focus:border-blue-500 text-gray-600"
+                                />
+                                <select
+                                    value={filterServiceType}
+                                    onChange={(e) => setFilterServiceType(e.target.value)}
+                                    className="bg-white border text-sm rounded px-3 py-1.5 outline-none focus:border-blue-500 text-gray-600"
+                                >
+                                    <option value="All">All Services</option>
+                                    <option value="Vehicle Service">Vehicle Service</option>
+                                    <option value="Driving Licence">Driving Licence</option>
+                                </select>
+                                {(filterDate || filterServiceType !== 'All') && (
+                                    <button
+                                        onClick={() => { setFilterDate(''); setFilterServiceType('All'); }}
+                                        className="text-xs text-red-500 hover:text-red-700 px-3 py-1 font-medium bg-red-50 hover:bg-red-100 rounded-md transition-colors"
+                                    >
+                                        Clear
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* Error Banner */}
