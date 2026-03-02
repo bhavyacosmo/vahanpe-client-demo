@@ -36,11 +36,11 @@ const Home = () => {
                 </div>
 
                 {/* Disclaimer */}
-                <div className="mt-8 px-4 flex justify-center">
-                    <div className="flex items-center gap-2 max-w-4xl">
-                        <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
-                        <p className="text-blue-700 text-sm leading-relaxed text-left">
-                            <span className="font-semibold">Disclaimer: </span>VahanPe is an independent facilitator and not a government authority. We assist with documentation and submission through official channels. Processing timelines (15-30 working days) begin post RTO submission and are subject to RTO approval.
+                <div className="mt-8 flex justify-center w-full">
+                    <div className="flex items-start gap-3 bg-gray-50 p-4 rounded-2xl w-full">
+                        <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                        <p className="text-gray-500 text-sm italic font-medium leading-relaxed text-left">
+                            Disclaimer: VahanPe is an independent facilitator and not a government authority. We assist with documentation and submission through official channels. Processing timelines (15-30 working days) begin post RTO submission and are subject to RTO approval.
                         </p>
                     </div>
                 </div>
