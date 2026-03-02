@@ -331,8 +331,8 @@ const AdminDashboard = () => {
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
                 <div className="space-y-6">
-                    {/* Filter Container: Flex side-by-side on md+ screens */}
-                    <div className="flex flex-col md:flex-row gap-4 md:items-center">
+                    {/* Filter Container: Flex side-by-side with space between on md+ screens */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                         {/* Level 1: Category Selection */}
                         <div className="flex gap-2 bg-gray-50 p-1.5 rounded-lg border border-gray-200 w-fit shrink-0">
                             <button
