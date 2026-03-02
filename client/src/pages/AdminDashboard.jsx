@@ -331,44 +331,47 @@ const AdminDashboard = () => {
             {/* SERVICES TAB */}
             {activeTab === 'services' && (
                 <div className="space-y-6">
-                    {/* Level 1: Category Selection */}
-                    <div className="flex gap-2 bg-gray-50 p-1.5 rounded-lg border border-gray-200 w-fit">
-                        <button
-                            onClick={() => { setServicesCategory('Driving Licence'); setServicesVehicleType('2W'); }}
-                            className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Driving Licence' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
-                        >
-                            Driving Licence
-                        </button>
-                        <button
-                            onClick={() => { setServicesCategory('Vehicle'); setServicesVehicleType('2W'); }}
-                            className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Vehicle' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
-                        >
-                            Vehicle
-                        </button>
-                    </div>
-
-                    {/* Level 2: Vehicle Type Selection */}
-                    <div className="flex gap-2">
-                        <button
-                            onClick={() => setServicesVehicleType('2W')}
-                            className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
-                        >
-                            2W
-                        </button>
-                        <button
-                            onClick={() => setServicesVehicleType('4W')}
-                            className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
-                        >
-                            4W
-                        </button>
-                        {servicesCategory === 'Driving Licence' && (
+                    {/* Filter Container: Flex side-by-side on md+ screens */}
+                    <div className="flex flex-col md:flex-row gap-4 md:items-center">
+                        {/* Level 1: Category Selection */}
+                        <div className="flex gap-2 bg-gray-50 p-1.5 rounded-lg border border-gray-200 w-fit shrink-0">
                             <button
-                                onClick={() => setServicesVehicleType('2W+4W')}
-                                className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W+4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                                onClick={() => { setServicesCategory('Driving Licence'); setServicesVehicleType('2W'); }}
+                                className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Driving Licence' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
                             >
-                                2W + 4W
+                                Driving Licence
                             </button>
-                        )}
+                            <button
+                                onClick={() => { setServicesCategory('Vehicle'); setServicesVehicleType('2W'); }}
+                                className={`px-6 py-2.5 rounded-md text-sm font-semibold transition-all ${servicesCategory === 'Vehicle' ? 'bg-white shadow-sm text-blue-600 border border-gray-200' : 'text-gray-500 hover:text-gray-700'}`}
+                            >
+                                Vehicle
+                            </button>
+                        </div>
+
+                        {/* Level 2: Vehicle Type Selection */}
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => setServicesVehicleType('2W')}
+                                className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                            >
+                                2W
+                            </button>
+                            <button
+                                onClick={() => setServicesVehicleType('4W')}
+                                className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                            >
+                                4W
+                            </button>
+                            {servicesCategory === 'Driving Licence' && (
+                                <button
+                                    onClick={() => setServicesVehicleType('2W+4W')}
+                                    className={`px-5 py-2 rounded-full text-xs font-bold transition-all border ${servicesVehicleType === '2W+4W' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'}`}
+                                >
+                                    2W + 4W
+                                </button>
+                            )}
+                        </div>
                     </div>
 
                     {/* Desktop View */}
