@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Truck, Car, CreditCard, Bike, Shield, FileText, Clock, MoreHorizontal, CheckCircle2, Smartphone, Copy, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Truck, Car, CreditCard, Bike, Shield, FileText, Clock, MoreHorizontal, CheckCircle2, Smartphone, Copy, ChevronRight, AlertCircle } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -330,6 +330,16 @@ const VehicleServices = () => {
                                     })
                                 )}
                             </div>
+
+                            {/* Non-KA Disclaimer */}
+                            {!formData.registrationNumber.toUpperCase().startsWith('KA') && (
+                                <div className="mt-6 flex items-start gap-2 bg-red-50 p-3 rounded-xl border border-red-100">
+                                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                                    <p className="text-sm text-red-600 font-medium leading-snug">
+                                        Disclaimer: Out-of-state (Non-KA) vehicle services may require additional physical documentation and extended processing times.
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )
                 }

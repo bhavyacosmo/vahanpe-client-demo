@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ServiceCard from '../components/ServiceCard';
 import axios from 'axios';
-import { ArrowLeft, ArrowRight, FileText, Smartphone, RefreshCw, Copy, Download, Globe, MapPin, CheckCircle2, CreditCard, RotateCw, Map, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, Smartphone, RefreshCw, Copy, Download, Globe, MapPin, CheckCircle2, CreditCard, RotateCw, Map, ChevronRight, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import ConsumerLogin from '../components/ConsumerLogin';
 import fourWheelerImage from '../assets/Gemini_Generated_Image_i7i9tbi7i9tbi7i9.png'; // Reusing as 4W image
@@ -368,6 +368,16 @@ const DrivingLicenceServices = () => {
                                     })
                                 )}
                             </div>
+
+                            {/* Non-KA Disclaimer */}
+                            {(!formData.licenceIssuedFrom.includes('Bangalore') && !formData.dlNumber.startsWith('KA')) && (
+                                <div className="mt-6 flex items-start gap-2 bg-red-50 p-3 rounded-xl border border-red-100">
+                                    <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                                    <p className="text-sm text-red-600 font-medium leading-snug">
+                                        Disclaimer: Out-of-state (Non-KA) driving licence services may require additional physical documentation and extended processing times.
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     )
                 }

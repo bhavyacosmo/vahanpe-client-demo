@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import carImage from '../assets/Gemini_Generated_Image_i7i9tbi7i9tbi7i9.png'; // Updated Image
 import dlImage from '../assets/home_dl.png';
 
@@ -36,10 +36,13 @@ const Home = () => {
                 </div>
 
                 {/* Disclaimer */}
-                <div className="mt-8 text-center px-4">
-                    <p className="text-[#e53935] text-sm leading-relaxed max-w-4xl mx-auto">
-                        VahanPe is an independent facilitator and not a government authority. We assist with documentation and submission through official channels. Processing timelines (15-30 working days) begin post RTO submission and are subject to RTO approval.
-                    </p>
+                <div className="mt-8 px-4 flex justify-center">
+                    <div className="flex items-center gap-2 max-w-4xl">
+                        <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+                        <p className="text-blue-700 text-sm leading-relaxed text-left">
+                            <span className="font-semibold">Disclaimer: </span>VahanPe is an independent facilitator and not a government authority. We assist with documentation and submission through official channels. Processing timelines (15-30 working days) begin post RTO submission and are subject to RTO approval.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
