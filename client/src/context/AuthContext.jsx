@@ -16,16 +16,18 @@ export const AuthProvider = ({ children }) => {
         if (storedUser) {
             try {
                 const parsedUser = JSON.parse(storedUser);
-                // Validate if we have a token either in user object or separate storage
-                if (parsedUser.token || storedToken) {
-                    // Ensure token is attached to user if found separately
+                // Consumer users (phone/OTP login) don't have tokens - always restore them
+                if (parsedUser.userType === 'consumer' || parsedUser.phone) {
+                    setUser(parsedUser);
+                } else if (parsedUser.token || storedToken) {
+                    // Admin users must have a token
                     if (!parsedUser.token && storedToken) {
                         parsedUser.token = storedToken;
                     }
                     setUser(parsedUser);
                 } else {
-                    // Stale session (Pre-fix) - valid user but no token
-                    console.warn("Found stale session without token. Logging out.");
+                    // Stale admin session without token - clear it
+                    console.warn("Found stale admin session without token. Logging out.");
                     localStorage.removeItem('vahanpe_user');
                     setUser(null);
                 }

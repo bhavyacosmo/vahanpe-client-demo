@@ -391,9 +391,13 @@ const VehicleServices = () => {
                             {/* Order Breakdown */}
                             <div className="bg-gray-50 p-4 rounded-xl mb-8">
                                 <h3 className="text-sm font-medium text-gray-500 mb-1">Order Summary</h3>
-                                <p className="text-red-500 text-xs mb-4">
-                                    Applicable government fees/DD are extra and payable as per actuals
-                                </p>
+                                {(formData.serviceSelected?.toLowerCase().includes('rc renewal') ||
+                                    formData.serviceSelected?.toLowerCase().includes('re-registration') ||
+                                    formData.serviceSelected?.toLowerCase().includes('re registration')) && (
+                                        <p className="text-red-500 text-xs mb-4">
+                                            Applicable government fees/DD are extra and payable as per actuals
+                                        </p>
+                                    )}
                                 <div className="flex justify-between text-sm mb-2">
                                     <span className="text-gray-600">Service Fee <span>(All Inclusive)</span></span>
                                     <span className="font-medium">₹ {formData.price}</span>

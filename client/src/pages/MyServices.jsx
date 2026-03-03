@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import { RefreshCw, Info, Calendar, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Info, Calendar, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
@@ -63,9 +63,6 @@ const MyServices = () => {
         <div className="w-full max-w-lg md:max-w-3xl mx-auto px-4 pb-24 pt-6">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl font-bold text-gray-900 tracking-tight">My Services</h1>
-                <button onClick={fetchBookings} className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1.5 rounded-full transition-colors">
-                    <RefreshCw className="w-4 h-4" /> Refresh
-                </button>
             </div>
 
             {loading ? (
@@ -154,10 +151,10 @@ const MyServices = () => {
                                             <p className="text-sm text-gray-500">
                                                 {booking.vehicleType ? `${booking.vehicleType} • ${booking.registrationNumber}` : `Licence • ${booking.licenceClass}`}
                                             </p>
+                                            <div className="text-xs text-gray-400 mt-1">Booking Date: {new Date(booking.createdAt).toLocaleDateString()}</div>
                                         </div>
                                         <div className="mt-4 md:mt-0 text-right">
                                             <div className="text-3xl font-bold text-blue-600">₹{booking.price}</div>
-                                            <div className="text-xs text-gray-400">{new Date(booking.createdAt).toLocaleDateString()}</div>
                                         </div>
                                     </div>
 
