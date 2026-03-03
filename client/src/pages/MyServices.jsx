@@ -152,7 +152,7 @@ const MyServices = () => {
                                                 {booking.vehicleType ? `${booking.vehicleType} • ${booking.registrationNumber}` : `Licence • ${booking.licenceClass}`}
                                             </p>
                                             <div className="mt-2">
-                                                <span className="text-xs font-bold text-gray-400 uppercase tracking-wide block">Booking Date</span>
+                                                <span className="text-xs font-bold text-gray-600 uppercase tracking-wide block">Booking Date</span>
                                                 <span className="text-sm font-semibold text-gray-700 block">{new Date(booking.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</span>
                                             </div>
                                         </div>
