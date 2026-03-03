@@ -118,7 +118,7 @@ const MyServices = () => {
                                     {/* Date and Price */}
                                     <div className="flex justify-between items-end border-t border-gray-50 pt-6">
                                         <div>
-                                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1">DATE OF REGISTRATION</span>
+                                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider block mb-1">BOOKING DATE</span>
                                             <span className="text-base font-bold text-gray-900 block">
                                                 {new Date(booking.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' })}
                                             </span>
