@@ -256,7 +256,7 @@ const AdminDashboard = () => {
     });
 
     return (
-        <div className="max-w-6xl w-full mx-auto p-4">
+        <div className="max-w-7xl w-full mx-auto p-4">
             <div className="flex flex-col xl:flex-row justify-between xl:items-center gap-4 mb-8 bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
@@ -461,32 +461,39 @@ const AdminDashboard = () => {
                         <table className="w-full text-left border-collapse">
                             <thead className="bg-gray-50 text-gray-500 uppercase text-xs font-semibold">
                                 <tr>
-                                    <th className="p-4">Date</th>
-                                    <th className="p-4">ID</th>
-                                    <th className="p-4">Service</th>
-                                    <th className="p-4">Customer</th>
-                                    <th className="p-4">Status</th>
-                                    <th className="p-4">Feasibility</th>
-                                    <th className="p-4">Action</th>
+                                    <th className="px-5 py-4">Date</th>
+                                    <th className="px-5 py-4">Type</th>
+                                    <th className="px-5 py-4">ID</th>
+                                    <th className="px-5 py-4">Service</th>
+                                    <th className="px-5 py-4">Customer</th>
+                                    <th className="px-5 py-4">Status</th>
+                                    <th className="px-5 py-4">Feasibility</th>
+                                    <th className="px-5 py-4">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {Array.isArray(filteredBookings) && filteredBookings.length > 0 ? (
                                     filteredBookings.map(booking => (
                                         <tr key={booking.id} className="hover:bg-gray-50">
-                                            <td className="p-4 text-sm text-gray-600">
+                                            <td className="px-5 py-4 text-sm text-gray-600 whitespace-nowrap">
                                                 {booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : 'N/A'}
                                             </td>
-                                            <td className="p-4 font-mono text-sm">{booking.bookingId}</td>
-                                            <td className="p-4">
+                                            <td className="px-5 py-4">
+                                                <span className={`px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap ${booking.vehicleType ? 'bg-blue-50 text-blue-700' : 'bg-orange-50 text-orange-700'
+                                                    }`}>
+                                                    {booking.vehicleType ? '🚗 Vehicle' : '🪪 DL'}
+                                                </span>
+                                            </td>
+                                            <td className="px-5 py-4 font-mono text-sm">{booking.bookingId}</td>
+                                            <td className="px-5 py-4">
                                                 <div className="font-medium">{booking.serviceSelected}</div>
                                                 <div className="text-xs text-gray-400">{booking.vehicleType || booking.licenceClass}</div>
                                             </td>
-                                            <td className="p-4">
+                                            <td className="px-5 py-4">
                                                 <div className="font-medium text-gray-800">{booking.customerName || 'N/A'}</div>
                                                 <div className="text-xs text-gray-500">{booking.customerPhone}</div>
                                             </td>
-                                            <td className="p-4">
+                                            <td className="px-5 py-4">
                                                 <span className={`px-2 py-1 rounded-full text-xs font-bold ${booking.status === 'Cancelled' || booking.status === 'Not Serviceable' ? 'bg-red-100 text-red-700' :
                                                     booking.status === 'Delivered' ? 'bg-green-100 text-green-700' :
                                                         'bg-blue-50 text-blue-700'
@@ -494,7 +501,7 @@ const AdminDashboard = () => {
                                                     {booking.status}
                                                 </span>
                                             </td>
-                                            <td className="p-4">
+                                            <td className="px-5 py-4">
                                                 <span className={`px-2 py-1 rounded-full text-xs font-bold ${booking.feasibilityStatus === 'Doable' ? 'bg-green-100 text-green-700' :
                                                     booking.feasibilityStatus === 'Not Doable' ? 'bg-red-100 text-red-700' :
                                                         'bg-gray-100 text-gray-600'
@@ -502,7 +509,7 @@ const AdminDashboard = () => {
                                                     {booking.feasibilityStatus}
                                                 </span>
                                             </td>
-                                            <td className="p-4">
+                                            <td className="px-5 py-4">
                                                 <button
                                                     onClick={() => setSelectedBooking(booking)}
                                                     className="text-secondary hover:underline font-medium text-sm"
@@ -514,7 +521,7 @@ const AdminDashboard = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="7" className="p-8 text-center text-gray-500">
+                                        <td colSpan="8" className="p-8 text-center text-gray-500">
                                             No bookings found matching filters.
                                         </td>
                                     </tr>
