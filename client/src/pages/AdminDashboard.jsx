@@ -462,7 +462,7 @@ const AdminDashboard = () => {
                             <thead className="bg-gray-50 text-gray-500 uppercase text-xs font-semibold">
                                 <tr>
                                     <th className="px-5 py-4">Date</th>
-                                    <th className="px-5 py-4">Type</th>
+                                    <th className="px-5 py-4">Service Type</th>
                                     <th className="px-5 py-4">ID</th>
                                     <th className="px-5 py-4">Service</th>
                                     <th className="px-5 py-4">Customer</th>
@@ -537,6 +537,7 @@ const AdminDashboard = () => {
                                             <span className="font-mono text-xs text-gray-500 block mb-1">{booking.bookingId}</span>
                                             <h3 className="font-semibold text-gray-800">{booking.serviceSelected}</h3>
                                             <p className="text-xs text-gray-500">{booking.vehicleType || booking.licenceClass}</p>
+                                            <p className="text-xs font-medium text-gray-600 mt-0.5">Service Type: {booking.vehicleType ? 'Vehicle Service' : 'Driving Licence'}</p>
                                         </div>
                                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${booking.status === 'Cancelled' || booking.status === 'Not Serviceable' ? 'bg-red-100 text-red-700' :
                                             booking.status === 'Delivered' ? 'bg-green-100 text-green-700' :
